@@ -14,6 +14,7 @@ public class UsersFactory {
 		if (instance==null)
 			instance = new UsersFactory();
 		return instance;
+		
 	}
 	
 	private UsersFactory(){

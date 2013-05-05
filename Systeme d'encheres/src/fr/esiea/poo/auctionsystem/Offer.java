@@ -2,7 +2,7 @@ package fr.esiea.poo.auctionsystem;
 
 public class Offer {
 	private String userLogin;
-	private int price;
+	private double price;
 	
 	public Offer(String user, int price){
 		//TODO
@@ -11,7 +11,7 @@ public class Offer {
 	protected String getUser(){
 		return this.userLogin;
 	}
-	public int getPrice(){
+	public double getPrice(){
 		return this.price;
 	}
 }

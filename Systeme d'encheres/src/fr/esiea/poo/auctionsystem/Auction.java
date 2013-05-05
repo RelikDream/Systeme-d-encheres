@@ -3,10 +3,10 @@ package fr.esiea.poo.auctionsystem;
 public class Auction {
 	private int id;
 	private Item object;
-	private Object dateLimite;
+	private Object deadline;
 	private AuctionState state;
-	private int minPrice;
-	private int reservePrice;
+	private double minPrice;
+	private double reservePrice;
 	
 	protected Auction(){
 		//TODO

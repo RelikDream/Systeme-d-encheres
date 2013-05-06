@@ -4,7 +4,7 @@ import fr.esiea.poo.auctionsystem.Auction;
 
 /**
  * 
- * @author Thomas
+ * @author Thomas Emmanuelle
  *
  */
 public abstract class AbstractUser {

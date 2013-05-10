@@ -5,7 +5,8 @@ public class Offer {
 	private double price;
 	
 	public Offer(String user, int price){
-		//TODO
+		this.userLogin = userLogin;
+		this.price = price;
 	}
 	
 	protected String getUser(){

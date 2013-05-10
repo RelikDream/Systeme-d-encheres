@@ -8,8 +8,12 @@ public class Auction {
 	private double minPrice;
 	private double reservePrice;
 	
-	protected Auction(){
-		//TODO
+	protected Auction(int id, Item object, double minPrice, double reservePrice ){
+		this.id = id;
+		this.object = object;
+		this.minPrice= minPrice;
+		this.reservePrice = reservePrice;
+		
 	}
 	
 	@Override

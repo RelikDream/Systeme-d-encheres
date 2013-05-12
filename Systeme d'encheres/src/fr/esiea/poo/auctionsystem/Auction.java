@@ -6,13 +6,11 @@ public class Auction {
 	private final int id;
 	private final String owner;
 	private final Item object;
-	
-
-
 	private final Date deadline;
 	private AuctionState state;
 	private final double minPrice;
 	private final double reservePrice;
+	private Offer currentOffer;
 	
 	protected Auction(String owner,int id, Item object, double minPrice, double reservePrice,Date deadline ){
 		this.id = id;
@@ -22,6 +20,7 @@ public class Auction {
 		this.reservePrice = reservePrice;
 		this.deadline=deadline;
 		this.state=AuctionState.CREATED;
+		this.currentOffer=new Offer("",minPrice);
 	}
 	
 	@Override
@@ -79,5 +78,11 @@ public class Auction {
 	public int getId(){
 		return(id);
 	}
-
+	
+	public void updateOffer(Offer o) throws Exception{
+		if(this.currentOffer.getPrice()<o.getPrice())
+			this.currentOffer=o;
+		else
+			throw new Exception("Offer prive is lower than the actual offer on this auction");
+	}
 }

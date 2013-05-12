@@ -46,19 +46,24 @@ public class AuctionHouse {
 	 * @param orderBy
 	 * @return
 	 */
-	public ArrayList<Auction> getAuctions(OrderBy orderBy){
-		ArrayList<Auction> clone=(ArrayList<Auction>)this.auctions.clone();
+	public ArrayList<Auction> getAuctions(OrderBy orderBy,AuctionState state){
+		ArrayList<Auction> clone;
+		
+		if(state==null)
+			clone=(ArrayList<Auction>) this.auctions.clone();
+		
+		else{	
+			clone= new ArrayList<Auction>();
+			for(Auction a: this.auctions){
+				if(a.getState()==state)
+					clone.add(a);
+			}
+		}
 		switch(orderBy){
-		case DECREASING_MIN_PRICE:
-			//TODO Order list
-			break;
 		case DECREASING_OFFER:
 			//TODO Order list
 			break;
 		case DECREASING_RESERVE_PRICE:
-			//TODO Order list
-			break;
-		case INCREASING_MIN_PRICE:
 			//TODO Order list
 			break;
 		case INCREASING_OFFER:
@@ -74,16 +79,27 @@ public class AuctionHouse {
 			//TODO Order list
 			break;
 		default:
-			//TODO Order list
-			break;
+
 		}
 		return clone;
 	}
 
 	public boolean addOffer(int auctionId, double price,String userLogin){
-		new Offer(userLogin,price);
-		//TODO
-		
-		return false;
+		ArrayList<Auction> auctions=this.getAuctions(null, AuctionState.PUBLISHED);
+		Auction auction=null;
+		for(Auction a: auctions){
+			if(a.getId()==auctionId)
+				auction=a;
+				break;
+		}
+		if (auction==null)
+			return false;
+		try {
+			auction.updateOffer(new Offer(userLogin,price));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

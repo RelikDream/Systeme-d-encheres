@@ -4,7 +4,7 @@ public class Item {
 	private int id;
 	private String description;
 	
-public void	Item(int id,String description){
+public	Item(int id,String description){
 	this.id = id;
 	this.description= description;
 }

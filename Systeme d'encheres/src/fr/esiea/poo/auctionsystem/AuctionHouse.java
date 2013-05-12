@@ -15,7 +15,7 @@ public class AuctionHouse {
 		TIME_REMAINING;
 	}
 	private static AuctionHouse instance;
-
+	
 	private ArrayList<Auction> auctions;
 	public static AuctionHouse getinstance(){
 		if(instance==null)
@@ -38,15 +38,14 @@ public class AuctionHouse {
 		this.addAuction(owner,itemId, itemDescription, minPrice, deadline, 0);
 	}
 	public void addAuction(String owner,int itemId, String itemDescription,double minPrice,Date deadline,double reservePrice){
-		Auction auction= new Auction(owner, 0/*TODO Create a unique code*/, new Item(itemId, itemDescription), minPrice, reservePrice, deadline);
+		Auction auction= new Auction(owner, this.auctions.size(), new Item(itemId, itemDescription), minPrice, reservePrice, deadline);
 		this.auctions.add(auction);
 	}
 	/**
 	 * 
-	 * @param orderBy
 	 * @return
 	 */
-	public ArrayList<Auction> getAuctions(OrderBy orderBy,AuctionState state){
+	public ArrayList<Auction> getAuctions(AuctionState state){
 		ArrayList<Auction> clone;
 		
 		if(state==null)
@@ -59,33 +58,11 @@ public class AuctionHouse {
 					clone.add(a);
 			}
 		}
-		switch(orderBy){
-		case DECREASING_OFFER:
-			//TODO Order list
-			break;
-		case DECREASING_RESERVE_PRICE:
-			//TODO Order list
-			break;
-		case INCREASING_OFFER:
-			//TODO Order list
-			break;
-		case INCREASING_RESERVE_PRICE:
-			//TODO Order list
-			break;
-		case STATE:
-			//TODO Order list
-			break;
-		case TIME_REMAINING:
-			//TODO Order list
-			break;
-		default:
-
-		}
 		return clone;
 	}
 
 	public boolean addOffer(int auctionId, double price,String userLogin){
-		ArrayList<Auction> auctions=this.getAuctions(null, AuctionState.PUBLISHED);
+		ArrayList<Auction> auctions=this.getAuctions(AuctionState.PUBLISHED);
 		Auction auction=null;
 		for(Auction a: auctions){
 			if(a.getId()==auctionId)

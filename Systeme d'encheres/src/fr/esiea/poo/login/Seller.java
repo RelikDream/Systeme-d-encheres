@@ -18,7 +18,7 @@ public class Seller extends AbstractUser {
 
 	@Override
 	public boolean publishAuction(int id) {
-		ArrayList<Auction> auctions = AuctionHouse.getinstance().getAuctions(null, AuctionState.CREATED);
+		ArrayList<Auction> auctions = AuctionHouse.getinstance().getAuctions(AuctionState.CREATED);
 		for(Auction a: auctions){
 			if(a.getId()==id){
 				try{
@@ -35,17 +35,13 @@ public class Seller extends AbstractUser {
 	}
 
 	@Override
-	public boolean sendOfferto(int price, Auction auction) throws Exception {
+	public boolean sendOfferto(int price, int auctionId) throws Exception {
 		throw new Exception("you are not allowed to send an offer !");
 	}
 
 
 	@Override
-	public int createAuction(String owner, int itemId, String itemDescription,
-			double minPrice, Date deadline, double reservePrice)
-			throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public void createAuction(int itemId, String itemDescription,double minPrice, Date deadline, double reservePrice)throws Exception {
+		AuctionHouse.getinstance().addAuction(this.getLogin(), itemId, itemDescription, minPrice, deadline, reservePrice);
 	}
-
 }

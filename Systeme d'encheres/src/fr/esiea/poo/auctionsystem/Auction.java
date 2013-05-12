@@ -23,12 +23,6 @@ public class Auction {
 		this.currentOffer=new Offer("",minPrice);
 	}
 	
-	@Override
-	public String toString(){
-		//TODO Transform Auction into a String
-		return null;
-	}
-	
 	public AuctionState getState() {
 		return state;
 	}

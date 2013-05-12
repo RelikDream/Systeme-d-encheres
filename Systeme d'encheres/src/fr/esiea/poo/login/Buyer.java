@@ -2,19 +2,18 @@ package fr.esiea.poo.login;
 
 import java.util.Date;
 
-import fr.esiea.poo.auctionsystem.Auction;
+import fr.esiea.poo.auctionsystem.AuctionHouse;
+
 
 public class Buyer extends AbstractUser {
 
 	protected Buyer(String login) {
 		super(login);
-		// TODO 
 	}
 
 	@Override
-	public boolean sendOfferto(int price, Auction auction) throws Exception {
-		// TODO
-		return false;
+	public boolean sendOfferto(int price, int auctionId) throws Exception {
+		return AuctionHouse.getinstance().addOffer(auctionId, price, this.getLogin());
 	}
 
 	@Override
@@ -23,7 +22,7 @@ public class Buyer extends AbstractUser {
 	}
 
 	@Override
-	public int createAuction(String owner, int itemId, String itemDescription, double minPrice, Date deadline, double reservePrice) throws Exception {
+	public void createAuction(int itemId, String itemDescription, double minPrice, Date deadline, double reservePrice) throws Exception {
 		throw new Exception("You are not allowed to send an offer !");
 	}
 

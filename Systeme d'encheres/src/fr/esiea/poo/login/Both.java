@@ -13,13 +13,12 @@ public class Both extends AbstractUser {
 	
 	protected Both(String login) {
 		super(login);
-		// TODO 
 	}
 
 
 	@Override
 	public boolean publishAuction(int id) {
-		ArrayList<Auction> auctions = AuctionHouse.getinstance().getAuctions(null, AuctionState.CREATED);
+		ArrayList<Auction> auctions = AuctionHouse.getinstance().getAuctions(AuctionState.CREATED);
 		for(Auction a: auctions){
 			if(a.getId()==id){
 				try{
@@ -36,18 +35,14 @@ public class Both extends AbstractUser {
 	}
 
 	@Override
-	public boolean sendOfferto(int price, Auction auction) throws Exception {
-		// TODO 
-		return false;
+	public boolean sendOfferto(int price, int auctionId) throws Exception {
+		return AuctionHouse.getinstance().addOffer(auctionId, price, this.getLogin());
 	}
 
 
 	@Override
-	public int createAuction(String owner, int itemId, String itemDescription,
-			double minPrice, Date deadline, double reservePrice)
-			throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public void createAuction(int itemId, String itemDescription,double minPrice, Date deadline, double reservePrice)throws Exception {
+		AuctionHouse.getinstance().addAuction(this.getLogin(), itemId, itemDescription, minPrice, deadline, reservePrice);
 	}
 
 }

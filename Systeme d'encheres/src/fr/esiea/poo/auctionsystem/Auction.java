@@ -26,7 +26,7 @@ public class Auction {
 	
 	@Override
 	public String toString(){
-		//TODO Tranform Auction into a String
+		//TODO Transform Auction into a String
 		return null;
 	}
 	
@@ -34,8 +34,26 @@ public class Auction {
 		return state;
 	}
 
-	public void setState(AuctionState state) {
-		//TODO verify we can't change to fobbiden Auctions
+	public void setState(AuctionState state) throws Exception {
+	switch (state){
+	case CANCELLED:
+		if(this.state==AuctionState.FINISHED)
+			throw new Exception("You can't cancelled a finished auction");
+		break;
+	case CREATED:
+		throw new Exception("You can't change a auction to a created state");
+	case FINISHED:
+		if(this.state!=AuctionState.PUBLISHED)
+			throw new Exception("An auction need to be published before it can be finished");
+		break;
+	case PUBLISHED:
+		if(this.state!=AuctionState.CREATED)
+			throw new Exception("You need to have a newly created auction to publish it");
+		break;
+	default:
+		throw new Exception("Invalid argument");
+	
+	}
 		this.state = state;
 	}
 

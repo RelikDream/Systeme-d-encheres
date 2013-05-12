@@ -1,6 +1,7 @@
 package fr.esiea.poo.auctionsystem;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AuctionHouse {
 	public enum OrderBy {
@@ -27,20 +28,18 @@ public class AuctionHouse {
 	}
 
 
-	public boolean addAuction(int itemId, String itemDescription,int deadline){
-		return this.addAuction(itemId, itemDescription, 0, deadline, 0);
+	public void addAuction(String owner,int itemId, String itemDescription,Date deadline){
+		this.addAuction(owner, itemId, itemDescription, 0, deadline, 0);
 	}
-	public boolean addAuction(int itemId, String itemDescription,int deadline,double reservePrice){
-		return this.addAuction(itemId, itemDescription, 0, deadline, reservePrice);
+	public void addAuction(String owner,int itemId, String itemDescription,Date deadline,double reservePrice){
+		this.addAuction(owner, itemId, itemDescription, 0, deadline, reservePrice);
 	}
-	public boolean addAuction(int itemId, String itemDescription,double minPrice,int deadline){
-		return this.addAuction(itemId, itemDescription, minPrice, deadline, 0);
+	public void addAuction(String owner,int itemId, String itemDescription,double minPrice,Date deadline){
+		this.addAuction(owner,itemId, itemDescription, minPrice, deadline, 0);
 	}
-	public boolean addAuction(int itemId, String itemDescription,double minPrice,int deadline,double reservePrice){
-		return this.addAuction(itemId,itemDescription ,minPrice,deadline, reservePrice) ;
-		
-		//TODO 
-
+	public void addAuction(String owner,int itemId, String itemDescription,double minPrice,Date deadline,double reservePrice){
+		Auction auction= new Auction(owner, 0/*TODO Create a unique code*/, new Item(itemId, itemDescription), minPrice, reservePrice, deadline);
+		this.auctions.add(auction);
 	}
 	/**
 	 * 

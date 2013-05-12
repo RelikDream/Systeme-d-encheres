@@ -13,13 +13,18 @@ public class Auction {
 		this.object = object;
 		this.minPrice= minPrice;
 		this.reservePrice = reservePrice;
-		
+		//TODO
 	}
 	
 	@Override
 	public String toString(){
 		//TODO
 		return null;
+	}
+	
+	
+	public int getId(){
+		return(id);
 	}
 
 }

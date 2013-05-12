@@ -4,6 +4,8 @@ import fr.esiea.poo.auctionsystem.Auction;
 
 public class Both extends AbstractUser {
 
+	// @autor : Emmanuelle
+	
 	protected Both(String login) {
 		super(login);
 		// TODO Auto-generated constructor stub

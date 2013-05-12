@@ -8,6 +8,15 @@ import fr.esiea.poo.auctionsystem.Auction;
  *
  */
 public abstract class AbstractUser {
+	public String getLogin() {
+		return login;
+	}
+	public String getName() {
+		return name;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
 	private String login;
 	private String name;
 	private String firstName;

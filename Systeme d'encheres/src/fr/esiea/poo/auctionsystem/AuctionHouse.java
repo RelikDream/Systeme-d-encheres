@@ -15,7 +15,7 @@ public class AuctionHouse {
 		TIME_REMAINING;
 	}
 	private static AuctionHouse instance;
-	
+
 	private ArrayList<Auction> auctions;
 	public static AuctionHouse getinstance(){
 		if(instance==null)
@@ -41,16 +41,31 @@ public class AuctionHouse {
 		Auction auction= new Auction(owner, this.auctions.size(), new Item(itemId, itemDescription), minPrice, reservePrice, deadline);
 		this.auctions.add(auction);
 	}
-	/**
-	 * 
-	 * @return
-	 */
+	public boolean cancelAuction(String username,int auctionId){
+		for(Auction a:this.auctions){
+			if(a.getId()==auctionId){
+				if(!(a.isReservePriceReached())){
+					try {
+						a.setState(AuctionState.CANCELLED);
+						return true;
+					} catch (Exception e) {
+						e.printStackTrace();
+						return false;
+					}
+
+				}
+				else
+					return false;
+			}
+		}
+		return false;
+	}
 	public ArrayList<Auction> getAuctions(AuctionState state){
 		ArrayList<Auction> clone;
-		
+
 		if(state==null)
 			clone=(ArrayList<Auction>) this.auctions.clone();
-		
+
 		else{	
 			clone= new ArrayList<Auction>();
 			for(Auction a: this.auctions){
@@ -67,7 +82,7 @@ public class AuctionHouse {
 		for(Auction a: auctions){
 			if(a.getId()==auctionId)
 				auction=a;
-				break;
+			break;
 		}
 		if (auction==null)
 			return false;

@@ -50,31 +50,31 @@ public class AuctionHouse {
 		ArrayList<Auction> clone=(ArrayList<Auction>)this.auctions.clone();
 		switch(orderBy){
 		case DECREASING_MIN_PRICE:
-			//TODO
+			//TODO Order list
 			break;
 		case DECREASING_OFFER:
-			//TODO
+			//TODO Order list
 			break;
 		case DECREASING_RESERVE_PRICE:
-			//TODO
+			//TODO Order list
 			break;
 		case INCREASING_MIN_PRICE:
-			//TODO
+			//TODO Order list
 			break;
 		case INCREASING_OFFER:
-			//TODO
+			//TODO Order list
 			break;
 		case INCREASING_RESERVE_PRICE:
-			//TODO
+			//TODO Order list
 			break;
 		case STATE:
-			//TODO
+			//TODO Order list
 			break;
 		case TIME_REMAINING:
-			//TODO
+			//TODO Order list
 			break;
 		default:
-			//TODO
+			//TODO Order list
 			break;
 		}
 		return clone;

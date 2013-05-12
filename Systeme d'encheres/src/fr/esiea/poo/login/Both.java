@@ -1,32 +1,38 @@
 package fr.esiea.poo.login;
 
+import java.util.Date;
+
 import fr.esiea.poo.auctionsystem.Auction;
 
 public class Both extends AbstractUser {
 
-	// @autor : Emmanuelle
+	// @autor : Thomas Emmanuelle
 	
 	protected Both(String login) {
 		super(login);
-		// TODO Auto-generated constructor stub
+		// TODO 
 	}
 
-	@Override
-	public int createAuction() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public boolean publishAuction(int id) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO 
 		return false;
 	}
 
 	@Override
 	public boolean sendOfferto(int price, Auction auction) throws Exception {
-		// TODO Auto-generated method stub
+		// TODO 
 		return false;
+	}
+
+
+	@Override
+	public int createAuction(String owner, int itemId, String itemDescription,
+			double minPrice, Date deadline, double reservePrice)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

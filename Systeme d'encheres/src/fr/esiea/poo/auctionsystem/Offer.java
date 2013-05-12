@@ -4,7 +4,7 @@ public class Offer {
 	private String userLogin;
 	private double price;
 	
-	public Offer(String user, int price){
+	public Offer(String user, double price){
 		this.userLogin = userLogin;
 		this.price = price;
 	}

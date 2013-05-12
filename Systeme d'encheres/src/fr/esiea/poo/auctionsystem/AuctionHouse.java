@@ -37,7 +37,10 @@ public class AuctionHouse {
 		return this.addAuction(itemId, itemDescription, minPrice, deadline, 0);
 	}
 	public boolean addAuction(int itemId, String itemDescription,double minPrice,int deadline,double reservePrice){
-		//TODO
+		return this.addAuction(itemId,itemDescription ,minPrice,deadline, reservePrice) ;
+		
+		//TODO 
+		
 		return false;
 	}
 	/**
@@ -80,7 +83,9 @@ public class AuctionHouse {
 	}
 
 	public boolean addOffer(int auctionId, double price,String userLogin){
+		new Offer(userLogin,price);
 		//TODO
+		
 		return false;
 	}
 }

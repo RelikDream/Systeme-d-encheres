@@ -12,12 +12,16 @@ import fr.esiea.poo.login.UsersFactory;
 
 public class TestsUser {
 
-	private AbstractUser user1;
+	private AbstractUser seller;
+	private AbstractUser buyer;
+	private AbstractUser both;
 	
 	@Before
 	public void setUp() throws Exception {
 		System.out.println("Start");
-		user1 = UsersFactory.getInstance().createUser(UserType.SELLER, "Toto");
+		this.seller = UsersFactory.getInstance().createUser(UserType.SELLER, "Toto");
+		this.buyer = UsersFactory.getInstance().createUser(UserType.BUYER, "Tata");
+		this.both = UsersFactory.getInstance().createUser(UserType.BOTH, "Titi");
 	}
 	
 	@After
@@ -27,13 +31,11 @@ public class TestsUser {
 	
 	@Test
 	public void inscription(){
-		Assert.assertEquals("Toto", user1.getLogin());
+		Assert.assertEquals("Toto", seller.getLogin());
+		Assert.assertEquals("Tata", buyer.getLogin());
+		Assert.assertEquals("Titi", both.getLogin());
 	}
+	//TODO peut etre mettre les test de creation encheres offres ici
 	
-	@Test
-	public void roleUser(){
-		//TODO
-		Assert.fail();
-	}
 
 }

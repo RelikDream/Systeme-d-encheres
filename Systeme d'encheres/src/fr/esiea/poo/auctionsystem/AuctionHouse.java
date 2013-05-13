@@ -26,7 +26,13 @@ public class AuctionHouse {
 	private AuctionHouse(){
 		this.auctions=new ArrayList<Auction>();
 	}
-
+	public Auction getAuction(Date date){
+		for(Auction a: this.auctions){
+			if (a.getDeadline()==date)
+				return a;
+		}
+		return null;
+	}
 
 	public void addAuction(String owner,int itemId, String itemDescription,Date deadline){
 		this.addAuction(owner, itemId, itemDescription, 0, deadline, 0);

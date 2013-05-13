@@ -58,7 +58,7 @@ public class TestsUser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.seller.sendOfferto(1000, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId());
+		this.seller.sendOfferto(1000, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId(), false);
 		
 	}
 	@Test
@@ -68,7 +68,7 @@ public class TestsUser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.buyer.sendOfferto(1000, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId());
+		this.buyer.sendOfferto(1000, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId(), false);
 		
 	}
 	@Test
@@ -78,7 +78,7 @@ public class TestsUser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.both.sendOfferto(1000, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId());
+		this.both.sendOfferto(1000, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId(), false);
 		
 	}
 	

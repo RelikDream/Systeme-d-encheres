@@ -2,6 +2,8 @@ package fr.esiea.poo.login;
 
 import java.util.Date;
 
+import fr.esiea.poo.warning.WarningType;
+
 
 /**
  * 
@@ -35,8 +37,12 @@ public abstract class AbstractUser {
 		this.createAuction(itemId, itemDescription, minPrice, deadline, 0);
 		
 	}
+	public void warnMe(String msg){
+		System.out.println(this.login +" received a warning:\n"+msg);
+	}
 	public abstract void createAuction(int itemId,String itemDescription, double minPrice,Date deadline,double reservePrice) throws Exception;
 	public abstract boolean cancelAuction(int AuctionId)throws Exception;
 	public abstract boolean publishAuction(int id) throws Exception;
-	public abstract boolean sendOfferto(int price ,int auctionId) throws Exception;
+	public abstract boolean sendOfferto(int price ,int auctionId, boolean followed) throws Exception;
+	public abstract boolean addWarning(int aId, WarningType wt) throws Exception;
 }

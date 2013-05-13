@@ -3,6 +3,8 @@ package fr.esiea.poo.auctionsystem;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.esiea.poo.warning.Warning;
+
 public class AuctionHouse {
 
 	private static AuctionHouse instance;
@@ -24,18 +26,19 @@ public class AuctionHouse {
 		}
 		return null;
 	}
-
-	public void addAuction(String owner,int itemId, String itemDescription,Date deadline){
-		this.addAuction(owner, itemId, itemDescription, 0, deadline, 0);
+	public Auction getAuction(int aId){
+		for(Auction a: this.auctions){
+			if (a.getId()==aId)
+				return a;
+		}
+		return null;
 	}
-	public void addAuction(String owner,int itemId, String itemDescription,Date deadline,double reservePrice){
-		this.addAuction(owner, itemId, itemDescription, 0, deadline, reservePrice);
+	public void addWarning(int aId, Warning w){
+		this.getAuction(aId).addWarning(w);
 	}
-	public void addAuction(String owner,int itemId, String itemDescription,double minPrice,Date deadline){
-		this.addAuction(owner,itemId, itemDescription, minPrice, deadline, 0);
-	}
-	public void addAuction(String owner,int itemId, String itemDescription,double minPrice,Date deadline,double reservePrice){
+	public void addAuction(String owner,int itemId, String itemDescription,double minPrice,Date deadline,double reservePrice,Warning warning){
 		Auction auction= new Auction(owner, this.auctions.size(), new Item(itemId, itemDescription), minPrice, reservePrice, deadline);
+		auction.addWarning(warning);
 		this.auctions.add(auction);
 	}
 	public boolean cancelAuction(String username,int auctionId){
@@ -53,6 +56,22 @@ public class AuctionHouse {
 				}
 				else
 					return false;
+			}
+		}
+		return false;
+	}
+	public boolean publishAuction(int id ,String username) {
+		ArrayList<Auction> auctions = AuctionHouse.getInstance().getAuctions(AuctionState.CREATED);
+		for(Auction a: auctions){
+			if(a.getId()==id && a.getOwner().equals(username)){
+				try{
+				a.setState(AuctionState.PUBLISHED);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					return false;
+				}
+				return true;
 			}
 		}
 		return false;
@@ -76,7 +95,7 @@ public class AuctionHouse {
 		return clone;
 	}
 
-	public boolean addOffer(int auctionId, double price,String userLogin){
+	public boolean addOffer(int auctionId, double price,String userLogin, Warning w){
 		ArrayList<Auction> auctions=this.getAuctions(AuctionState.PUBLISHED);
 		Auction auction=null;
 		for(Auction a: auctions){
@@ -87,7 +106,7 @@ public class AuctionHouse {
 		if (auction==null)
 			return false;
 		try {
-			auction.updateOffer(new Offer(userLogin,price));
+			auction.updateOffer(new Offer(userLogin,price,w));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

@@ -45,7 +45,7 @@ public class TestsAuction {
 	}
 	@Test
 	public void testOfferRecognition(){
-		Offer o= new Offer(this.buyer.getLogin(),1000);
+		Offer o= new Offer(this.buyer.getLogin(),1000,null);
 		Assert.assertTrue(o.getUserLogin()==this.buyer.getLogin()&&o.getPrice()==1000);
 		Assert.assertFalse(o.getUserLogin()==this.seller.getLogin()&&o.getPrice()==1000);
 		Assert.assertFalse(o.getUserLogin()==this.buyer.getLogin()&&o.getPrice()==9999);
@@ -71,9 +71,9 @@ public class TestsAuction {
 			e.printStackTrace();
 		}
 		try {
-			Assert.assertFalse(this.buyer.sendOfferto(1000,AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId()));
+			Assert.assertFalse(this.buyer.sendOfferto(1000,AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId(), false));
 			this.seller.publishAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId());
-			Assert.assertTrue(this.buyer.sendOfferto(1000,AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId()));
+			Assert.assertTrue(this.buyer.sendOfferto(1000,AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId(), false));
 			
 		} catch (Exception e) {
 			Assert.fail();
@@ -88,7 +88,7 @@ public class TestsAuction {
 			Assert.assertTrue(this.seller.cancelAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId()));
 			this.seller.createAuction(2, "Descritption de l'objet d'id 2",new Date(2013, 06, 02, 13, 14),1000);
 			this.seller.publishAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId());
-			this.buyer.sendOfferto(1001, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId());
+			this.buyer.sendOfferto(1001, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId(), false);
 			Assert.assertFalse(this.seller.cancelAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId()));
 			
 		} catch (Exception e) {

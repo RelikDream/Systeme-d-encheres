@@ -1,6 +1,8 @@
 package fr.esiea.poo.auctionsystem;
 
+import java.util.ArrayList;
 import java.util.Date;
+import fr.esiea.poo.warning.*;
 
 public class Auction {
 	private final int id;
@@ -11,6 +13,7 @@ public class Auction {
 	private final double minPrice;
 	private final double reservePrice;
 	private Offer currentOffer;
+	private ArrayList<Warning> warn;
 
 	protected Auction(String owner,int id, Item object, double minPrice, double reservePrice,Date deadline ){
 		this.id = id;
@@ -20,10 +23,24 @@ public class Auction {
 		this.reservePrice = reservePrice;
 		this.deadline=deadline;
 		this.state=AuctionState.CREATED;
-		this.currentOffer=new Offer("",minPrice);
+		this.currentOffer=new Offer("",minPrice,null);
+		this.warn=new ArrayList<Warning>();
 	}
 
-
+	protected void addWarning(Warning w){
+		this.warn.add(w);
+	}
+	private ArrayList<Warning> getWarning(WarningType t){
+		if(t==null)
+			return (ArrayList<Warning>) this.warn.clone();
+		ArrayList<Warning> warn=new ArrayList<Warning>();
+		for(Warning w: this.warn){
+			if(w.getType().equals(t))
+				warn.add(w);
+		}
+		return warn;
+		
+	}
 	public Offer getCurrentOffer() {
 		return currentOffer;
 	}
@@ -32,11 +49,16 @@ public class Auction {
 		return state;
 	}
 
-	public void setState(AuctionState state) throws Exception {
+	protected void setState(AuctionState state) throws Exception {
 		switch (state){
 		case CANCELLED:
 			if(this.state==AuctionState.FINISHED)
 				throw new Exception("You can't cancelled a finished auction");
+			ArrayList<Warning>warn=this.getWarning(WarningType.AUCTION_CANCELED);
+			for(Warning w:warn){
+				w.sendWarning(this.id);
+				this.warn.remove(w);
+			}
 			break;
 		case CREATED:
 			throw new Exception("You can't change a auction to a created state");
@@ -87,8 +109,21 @@ public class Auction {
 	public void updateOffer(Offer o) throws Exception{
 		if(this.state!=AuctionState.PUBLISHED)
 			throw new Exception("The auction must be published to put an offer on it");
-		if(this.currentOffer.getPrice()<o.getPrice())
+		if(this.currentOffer.getPrice()<o.getPrice()){
+			this.currentOffer.warn(this.id);
 			this.currentOffer=o;
+			if(this.isReservePriceReached()){
+				ArrayList<Warning>warn=this.getWarning(WarningType.RESERVE_PRICE_REACHED);
+				for(Warning w:warn){
+					w.sendWarning(this.id);
+					this.warn.remove(w);
+				}
+			}
+			ArrayList<Warning>warn=this.getWarning(WarningType.OFFER_ON_AUCTION);
+			for(Warning w:warn){
+				w.sendWarning(this.id);
+			}
+		}
 		else
 			throw new Exception("Offer prive is lower than the actual offer on this auction");
 	}

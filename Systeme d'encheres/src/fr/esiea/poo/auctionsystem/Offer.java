@@ -18,7 +18,8 @@ public class Offer {
 		return price;
 	}
 	public void warn(int aId){
-		this.warning.sendWarning(aId);
+		if(warning!=null)
+			this.warning.sendWarning(aId);
 	}
 
 }

@@ -4,16 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class AuctionHouse {
-	public enum OrderBy {
-		STATE,
-		DECREASING_OFFER,
-		INCREASING_OFFER,
-		DECREASING_MIN_PRICE,
-		INCREASING_MIN_PRICE,
-		DECREASING_RESERVE_PRICE,
-		INCREASING_RESERVE_PRICE,
-		TIME_REMAINING;
-	}
+
 	private static AuctionHouse instance;
 
 	private ArrayList<Auction> auctions;
@@ -70,7 +61,7 @@ public class AuctionHouse {
 		this.auctions.clear();
 	}
 	public ArrayList<Auction> getAuctions(AuctionState state){
-		ArrayList<Auction> clone;
+		ArrayList<Auction> clone=null;
 
 		if(state==null)
 			clone=(ArrayList<Auction>) this.auctions.clone();

@@ -18,7 +18,7 @@ public class Both extends AbstractUser {
 
 	@Override
 	public boolean publishAuction(int id) {
-		ArrayList<Auction> auctions = AuctionHouse.getinstance().getAuctions(AuctionState.CREATED);
+		ArrayList<Auction> auctions = AuctionHouse.getInstance().getAuctions(AuctionState.CREATED);
 		for(Auction a: auctions){
 			if(a.getId()==id){
 				try{
@@ -36,13 +36,19 @@ public class Both extends AbstractUser {
 
 	@Override
 	public boolean sendOfferto(int price, int auctionId) throws Exception {
-		return AuctionHouse.getinstance().addOffer(auctionId, price, this.getLogin());
+		return AuctionHouse.getInstance().addOffer(auctionId, price, this.getLogin());
 	}
 
 
 	@Override
 	public void createAuction(int itemId, String itemDescription,double minPrice, Date deadline, double reservePrice)throws Exception {
-		AuctionHouse.getinstance().addAuction(this.getLogin(), itemId, itemDescription, minPrice, deadline, reservePrice);
+		AuctionHouse.getInstance().addAuction(this.getLogin(), itemId, itemDescription, minPrice, deadline, reservePrice);
+	}
+
+
+	@Override
+	public boolean cancelAuction(int auctionId) throws Exception {
+		return AuctionHouse.getInstance().cancelAuction(this.getLogin(), auctionId);
 	}
 
 }

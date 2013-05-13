@@ -36,6 +36,7 @@ public abstract class AbstractUser {
 		
 	}
 	public abstract void createAuction(int itemId,String itemDescription, double minPrice,Date deadline,double reservePrice) throws Exception;
+	public abstract boolean cancelAuction(int AuctionId)throws Exception;
 	public abstract boolean publishAuction(int id) throws Exception;
 	public abstract boolean sendOfferto(int price ,int auctionId) throws Exception;
 }

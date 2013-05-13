@@ -23,6 +23,11 @@ public class Auction {
 		this.currentOffer=new Offer("",minPrice);
 	}
 
+
+	public Offer getCurrentOffer() {
+		return currentOffer;
+	}
+
 	public AuctionState getState() {
 		return state;
 	}
@@ -80,6 +85,8 @@ public class Auction {
 	}
 
 	public void updateOffer(Offer o) throws Exception{
+		if(this.state!=AuctionState.PUBLISHED)
+			throw new Exception("The auction must be published to put an offer on it");
 		if(this.currentOffer.getPrice()<o.getPrice())
 			this.currentOffer=o;
 		else

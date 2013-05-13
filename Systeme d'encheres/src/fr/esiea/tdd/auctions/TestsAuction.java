@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.esiea.poo.auctionsystem.AuctionHouse;
 import fr.esiea.poo.auctionsystem.Item;
 import fr.esiea.poo.auctionsystem.Offer;
 import fr.esiea.poo.login.AbstractUser;
@@ -28,6 +29,7 @@ public class TestsAuction {
 		this.seller = UsersFactory.getInstance().createUser(UserType.SELLER, "Toto");
 		this.buyer = UsersFactory.getInstance().createUser(UserType.BUYER, "Tata");
 		this.both = UsersFactory.getInstance().createUser(UserType.BOTH, "Titi");
+		AuctionHouse.getInstance().clearAuctions();
 	}
 	
 	@After
@@ -51,11 +53,66 @@ public class TestsAuction {
 		
 	}
 	@Test
+	public void testAuctionRecognition(){
+		try {
+			this.seller.createAuction(1, "Descritption de l'objet d'id 1",new Date(2013, 06, 02, 13, 13));
+			Assert.assertNotNull(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	@SuppressWarnings("deprecation")
+	@Test
 	public void testOffer(){
 		try {
 			this.seller.createAuction(1, "Descritption de l'objet d'id 1",new Date(2013, 06, 02, 13, 13));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		try {
+			Assert.assertFalse(this.buyer.sendOfferto(1000,AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId()));
+			this.seller.publishAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId());
+			Assert.assertTrue(this.buyer.sendOfferto(1000,AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId()));
+			
+		} catch (Exception e) {
+			Assert.fail();
+		}		
+	}
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testCancelAuction(){
+		try {
+			this.seller.createAuction(1, "Descritption de l'objet d'id 1",new Date(2013, 06, 02, 13, 13),1000);
+			this.seller.publishAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId());
+			Assert.assertTrue(this.seller.cancelAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 13)).getId()));
+			this.seller.createAuction(2, "Descritption de l'objet d'id 2",new Date(2013, 06, 02, 13, 14),1000);
+			this.seller.publishAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId());
+			this.buyer.sendOfferto(1001, AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId());
+			Assert.assertFalse(this.seller.cancelAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId()));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Test (expected=Exception.class)
+	public void testReservePriceAccessDenied() throws Exception{
+		try {
+			this.seller.createAuction(2, "Descritption de l'objet d'id 2",new Date(2013, 06, 02, 13, 14),1000);
+			this.seller.publishAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getReservePrice(this.buyer.getLogin());
+	}
+	@Test
+	public void testReservePriceAccessGranted() throws Exception{
+		try {
+			this.seller.createAuction(2, "Descritption de l'objet d'id 2",new Date(2013, 06, 02, 13, 14),1000);
+			this.seller.publishAuction(AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		AuctionHouse.getInstance().getAuction(new Date(2013, 06, 02, 13, 14)).getReservePrice(this.seller.getLogin());
 	}
 }

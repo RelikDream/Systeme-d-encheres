@@ -6,7 +6,6 @@ import java.util.Date;
 import fr.esiea.poo.auctionsystem.Auction;
 import fr.esiea.poo.auctionsystem.AuctionHouse;
 import fr.esiea.poo.auctionsystem.AuctionState;
-import fr.esiea.poo.auctionsystem.Item;
 
 public class Seller extends AbstractUser {
 
@@ -18,7 +17,7 @@ public class Seller extends AbstractUser {
 
 	@Override
 	public boolean publishAuction(int id) {
-		ArrayList<Auction> auctions = AuctionHouse.getinstance().getAuctions(AuctionState.CREATED);
+		ArrayList<Auction> auctions = AuctionHouse.getInstance().getAuctions(AuctionState.CREATED);
 		for(Auction a: auctions){
 			if(a.getId()==id){
 				try{
@@ -42,6 +41,12 @@ public class Seller extends AbstractUser {
 
 	@Override
 	public void createAuction(int itemId, String itemDescription,double minPrice, Date deadline, double reservePrice)throws Exception {
-		AuctionHouse.getinstance().addAuction(this.getLogin(), itemId, itemDescription, minPrice, deadline, reservePrice);
+		AuctionHouse.getInstance().addAuction(this.getLogin(), itemId, itemDescription, minPrice, deadline, reservePrice);
+	}
+
+
+	@Override
+	public boolean cancelAuction(int auctionId) throws Exception {
+		return AuctionHouse.getInstance().cancelAuction(this.getLogin(), auctionId);
 	}
 }
